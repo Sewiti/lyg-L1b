@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/minde/KTU/Lyg/L1b/Data.cpp">
+			<Option target="L1b"/>
+		</Unit>
+		<Unit filename="/home/minde/KTU/Lyg/L1b/Data.h">
+			<Option target="L1b"/>
+		</Unit>
 		<Unit filename="/home/minde/KTU/Lyg/L1b/main.cpp">
 			<Option target="L1b"/>
 		</Unit>

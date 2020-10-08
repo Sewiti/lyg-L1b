@@ -1,65 +1,68 @@
-#include <iostream>
+#include "Data.h"
+#include <cstring>
 #include <fstream>
-#include <vector>
-#include <string>
+#include <iostream>
 #include <omp.h>
 #include <openssl/sha.h>
-#include <cstring>
+#include <string>
+#include <vector>
+
 using namespace std;
 
-//#define DEBUG
 
-struct Data {
-    string Name;
-    int Age{};
-    double Salary{};
-    string Computed;
-};
+void executeFile(const string &dataFilename, const string &resultsFilename);
 
-vector<Data> readData(string filename);
-string getHash(Data item);
-void putIntoBuffer(vector<Data> *dataBuffer, int maxBufferSize, vector<Data> items, bool *finished);
-void worker(vector<Data> *dataBuffer, vector<Data> *resultsBuffer, bool *finished);
+vector<Data> readData(const string &filename);
+
+void putIntoBuffer(DataBuffer *dataBuffer, vector<Data> items);
+
+void worker(DataBuffer *dataBuffer, ResultsBuffer *resultsBuffer);
+
+string getHash(const Data &item);
+
 
 int main() {
-    for (int fileN = 1; fileN <= 1; fileN++) {
-        cout << "Started file  #" << fileN << endl;
-
+    for (int i = 1; i <= 3; i++) {
         char buffer[50];
-        snprintf(buffer, sizeof(buffer), "IFF-8-5_BernotasM_L1b_dat_%d.txt", fileN);
+        snprintf(buffer, sizeof(buffer), "IFF-8-5_BernotasM_L1b_dat_%d.txt", i);
         string dataFilename = buffer;
 
-        snprintf(buffer, sizeof(buffer), "IFF-8-5_BernotasM_L1b_rez_%d.txt", fileN);
+        snprintf(buffer, sizeof(buffer), "IFF-8-5_BernotasM_L1b_rez_%d.txt", i);
         string resultsFilename = buffer;
 
-        vector<Data> items = readData(dataFilename);
-        vector<Data> dataBuffer, resultsBuffer;
 
-        int n = items.size() / 4;
-        bool finished = false;
+        cout << "Executing '" << dataFilename << "'...\n";
 
-        #pragma omp parallel num_threads(n+1) default(none) shared(dataBuffer, resultsBuffer, items, finished)
-        {
-            if (omp_get_thread_num() == 0) {
-                // "Main" thread
-                putIntoBuffer(&dataBuffer, 8, items, &finished);
-            }
-            else {
-                // Worker threads
-                worker(&dataBuffer, &resultsBuffer, &finished);
-            }
-        };
-
-        cout << "Finished file #" << fileN << endl;
+        executeFile(dataFilename, resultsFilename);
     }
 
-//        outputResults(resultsFilename, items, resultMonitor.getItems())
-//        fmt.Printf("Finished %d\n", i)
-
+    cout << "Done! Have a nice day:)\n";
     return 0;
 }
 
-vector<Data> readData(string filename) {
+void executeFile(const string &dataFilename, const string &resultsFilename) {
+    vector<Data> items = readData(dataFilename);
+
+    auto dataBuffer = new DataBuffer(8);
+    auto resultsBuffer = new ResultsBuffer();
+
+    unsigned int n = items.size() / 4;
+
+#pragma omp parallel num_threads(n+1) default(none) shared(dataBuffer, resultsBuffer, items)
+    {
+        if (omp_get_thread_num() == 0) {
+            // "Main" thread
+            putIntoBuffer(dataBuffer, items);
+        } else {
+            // Worker threads
+            worker(dataBuffer, resultsBuffer);
+        }
+    }
+
+    // TODO: Print out results
+}
+
+vector<Data> readData(const string &filename) {
     ifstream file(filename);
 
     vector<Data> v;
@@ -70,13 +73,13 @@ vector<Data> readData(string filename) {
         file >> n;
 
         for (int i = 0; i < n; i++) {
-            string fname, lname;
+            string firstname, lastname;
 
             Data d;
-            file >> fname >> lname >> d.Age >> d.Salary;
+            file >> firstname >> lastname >> d.Age >> d.Salary;
 
             char buffer[30];
-            snprintf(buffer, sizeof(buffer), "%s %s", fname.c_str(), lname.c_str());
+            snprintf(buffer, sizeof(buffer), "%s %s", firstname.c_str(), lastname.c_str());
             d.Name = buffer;
 
             v.push_back(d);
@@ -88,87 +91,43 @@ vector<Data> readData(string filename) {
     return v;
 }
 
-string getHash(Data item) {
+void putIntoBuffer(DataBuffer *dataBuffer, vector<Data> items) {
+    for (int i = 0; i < items.size();) {
+        dataBuffer->addItem(items[i++]);
+    }
+
+    dataBuffer->setFinished();
+}
+
+void worker(DataBuffer *dataBuffer, ResultsBuffer *resultsBuffer) {
+    while (true) {
+        Data item = dataBuffer->removeItem();
+
+        if (!item.Valid) {
+            break;
+        }
+
+        item.Computed = getHash(item);
+        resultsBuffer->addItemSorted(item);
+    }
+}
+
+string getHash(const Data &item) {
     char buffer[100];
     snprintf(buffer, sizeof(buffer), "%s:%d:%f", item.Name.c_str(), item.Age, item.Salary);
     string str = buffer;
 
-    unsigned char *buf = new unsigned char[str.length()+1];
-    strcpy((char *)buf, str.c_str());
+    auto buf = new unsigned char[str.length() + 1];
+    strcpy((char *) buf, str.c_str());
 
-    unsigned char obuf[SHA_DIGEST_LENGTH];
+    unsigned char outputBuffer[SHA_DIGEST_LENGTH];
     for (int i = 0; i < 2000000; i++) {
-        SHA512(buf, sizeof(buf) -1, obuf);
+        SHA512(buf, sizeof(buf) - 1, outputBuffer);
 
-        buf = obuf;
+        buf = outputBuffer;
     }
 
-    // TODO: convert to string and return
+    string hash(reinterpret_cast<char *>(buf));
 
-    return "thisIsAHash";
-}
-
-void putIntoBuffer(vector<Data> *dataBuffer, int maxBufferSize, vector<Data> items, bool *finished) {
-    for (int i = 0; i < items.size();) {
-        #pragma omp critical(data_critical)
-        {
-            if (dataBuffer->size() < maxBufferSize) {
-#ifdef DEBUG
-                cout << omp_get_thread_num() << ": Inserted item\n";
-#endif
-                dataBuffer->push_back(items[i]);
-                i++;
-            }
-        }
-    }
-#ifdef DEBUG
-    cout << omp_get_thread_num() << ": Finished inserting\n";
-#endif
-    *finished = true;
-}
-
-void worker(vector<Data> *dataBuffer, vector<Data> *resultsBuffer, bool *finished) {
-    while (true) {
-        Data item;
-
-        bool received = false;
-        while (!received) {
-            #pragma omp critical(data_critical)
-            {
-                if (dataBuffer->size() > 0) {
-#ifdef DEBUG
-                    cout << omp_get_thread_num() << ": Removed item\n";
-#endif
-                    item = dataBuffer->at(0);
-                    dataBuffer->erase(dataBuffer->begin());
-                    received = true;
-                }
-            }
-
-            if (!received && *finished) {
-#ifdef DEBUG
-                cout << omp_get_thread_num() << ": Thread exit\n";
-#endif
-                return;
-            }
-        }
-
-        Data d;
-        d.Name = item.Name;
-        d.Age = item.Age;
-        d.Salary = item.Salary;
-        d.Computed = getHash(item);
-
-        bool pushed = false;
-        while (!pushed) {
-            #pragma omp critical (data_critical)
-            {
-#ifdef DEBUG
-                cout << omp_get_thread_num() << ": Pushed item\n";
-#endif
-                resultsBuffer->push_back(d);
-                pushed = true;
-            }
-        }
-    }
+    return hash;
 }

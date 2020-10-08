@@ -7,6 +7,8 @@
 #include <cstring>
 using namespace std;
 
+//#define DEBUG
+
 struct Data {
     string Name;
     int Age{};
@@ -16,9 +18,11 @@ struct Data {
 
 vector<Data> readData(string filename);
 string getHash(Data item);
+void putIntoBuffer(vector<Data> *dataBuffer, int maxBufferSize, vector<Data> items, bool *finished);
+void worker(vector<Data> *dataBuffer, vector<Data> *resultsBuffer, bool *finished);
 
 int main() {
-    for (int fileN = 1; fileN <= 3; fileN++) {
+    for (int fileN = 1; fileN <= 1; fileN++) {
         cout << "Started file  #" << fileN << endl;
 
         char buffer[50];
@@ -30,75 +34,23 @@ int main() {
 
         vector<Data> items = readData(dataFilename);
         vector<Data> dataBuffer, resultsBuffer;
-        int maxBufferSize = 5;
-        bool finished = false;
 
         int n = items.size() / 4;
+        bool finished = false;
 
-        #pragma omp parallel num_threads(n+1)
+        #pragma omp parallel num_threads(n+1) default(none) shared(dataBuffer, resultsBuffer, items, finished)
         {
             if (omp_get_thread_num() == 0) {
-                // "Main" thread, kuris idedineja duomenis
-                for (int i = 0; i < items.size();) {
-                    #pragma omp critical (data_critical)
-                    {
-                        if (dataBuffer.size() < maxBufferSize) {
-//                            cout << "Inserted item\n";
-                            dataBuffer.push_back(items[i]);
-                            i++;
-                        }
-                    }
-                }
-//                cout << "Finished inserting\n";
-                finished = true;
+                // "Main" thread
+                putIntoBuffer(&dataBuffer, 8, items, &finished);
             }
             else {
                 // Worker threads
-                while (true) {
-                    Data item;
-
-                    bool received = false;
-                    while (!received) {
-                        #pragma omp critical (data_critical)
-                        {
-                            if (dataBuffer.size() > 0) {
-//                                cout << "Removed item\n";
-                                item = dataBuffer[0];
-                                dataBuffer.erase(dataBuffer.begin());
-                                received = true;
-                            }
-                        }
-
-                        if (!received && finished) {
-                            break;
-                        }
-                    }
-
-                    if (!received && finished) {
-//                        cout << "Thread exit\n";
-                        break;
-                    }
-
-                    Data d;
-                    d.Name = item.Name;
-                    d.Age = item.Age;
-                    d.Salary = item.Salary;
-                    d.Computed = getHash(item);
-
-                    bool pushed = false;
-                    while (!pushed) {
-                        #pragma omp critical (data_critical)
-                        {
-//                            cout << "Pushed item\n";
-                            resultsBuffer.push_back(d);
-                            pushed = true;
-                        }
-                    }
-                }
+                worker(&dataBuffer, &resultsBuffer, &finished);
             }
         };
 
-        cout << "Finished file  #" << fileN << endl;
+        cout << "Finished file #" << fileN << endl;
     }
 
 //        outputResults(resultsFilename, items, resultMonitor.getItems())
@@ -151,5 +103,72 @@ string getHash(Data item) {
         buf = obuf;
     }
 
+    // TODO: convert to string and return
+
     return "thisIsAHash";
+}
+
+void putIntoBuffer(vector<Data> *dataBuffer, int maxBufferSize, vector<Data> items, bool *finished) {
+    for (int i = 0; i < items.size();) {
+        #pragma omp critical(data_critical)
+        {
+            if (dataBuffer->size() < maxBufferSize) {
+#ifdef DEBUG
+                cout << omp_get_thread_num() << ": Inserted item\n";
+#endif
+                dataBuffer->push_back(items[i]);
+                i++;
+            }
+        }
+    }
+#ifdef DEBUG
+    cout << omp_get_thread_num() << ": Finished inserting\n";
+#endif
+    *finished = true;
+}
+
+void worker(vector<Data> *dataBuffer, vector<Data> *resultsBuffer, bool *finished) {
+    while (true) {
+        Data item;
+
+        bool received = false;
+        while (!received) {
+            #pragma omp critical(data_critical)
+            {
+                if (dataBuffer->size() > 0) {
+#ifdef DEBUG
+                    cout << omp_get_thread_num() << ": Removed item\n";
+#endif
+                    item = dataBuffer->at(0);
+                    dataBuffer->erase(dataBuffer->begin());
+                    received = true;
+                }
+            }
+
+            if (!received && *finished) {
+#ifdef DEBUG
+                cout << omp_get_thread_num() << ": Thread exit\n";
+#endif
+                return;
+            }
+        }
+
+        Data d;
+        d.Name = item.Name;
+        d.Age = item.Age;
+        d.Salary = item.Salary;
+        d.Computed = getHash(item);
+
+        bool pushed = false;
+        while (!pushed) {
+            #pragma omp critical (data_critical)
+            {
+#ifdef DEBUG
+                cout << omp_get_thread_num() << ": Pushed item\n";
+#endif
+                resultsBuffer->push_back(d);
+                pushed = true;
+            }
+        }
+    }
 }

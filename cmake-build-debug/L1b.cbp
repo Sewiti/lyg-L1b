@@ -88,6 +88,9 @@
 		<Unit filename="/home/minde/KTU/Lyg/L1b/Data.h">
 			<Option target="L1b"/>
 		</Unit>
+		<Unit filename="/home/minde/KTU/Lyg/L1b/json.hpp">
+			<Option target="L1b"/>
+		</Unit>
 		<Unit filename="/home/minde/KTU/Lyg/L1b/main.cpp">
 			<Option target="L1b"/>
 		</Unit>

@@ -40,4 +40,6 @@ private:
     std::vector<Data> container;
 public:
     void addItemSorted(const Data &item);
+
+    std::vector<Data> getItems();
 };

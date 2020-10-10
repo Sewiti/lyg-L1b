@@ -1,0 +1,40 @@
+Initial data:
+  # | Name                          | Age | Salary
+----+-------------------------------+-----+----------
+  1 | Chad Harris                   |  16 |  1503.30
+  2 | John Campbell                 |  15 |  4744.78
+  3 | Ashley Nielsen                |   3 |  1043.72
+  4 | Colleen Brady                 |   3 |  2365.01
+  5 | Brenda Chan                   |  10 |  1776.68
+  6 | Kathryn Jones                 |  11 |  4433.21
+  7 | Isaiah Moore                  |  14 |  4139.16
+  8 | Jessica Proctor               |  13 |  4981.05
+  9 | Jesus Lewis                   |  16 |  1533.74
+ 10 | Michael Russell               |  12 |   844.71
+ 11 | Amy Ruiz                      |   7 |  2676.86
+ 12 | Allen Lee                     |   4 |  3253.82
+ 13 | Richard Nichols               |   8 |  3087.94
+ 14 | Tonya Quinn                   |  12 |   219.82
+ 15 | Eric Lowery                   |   5 |  3390.13
+ 16 | Michelle Jones                |  16 |  1990.74
+ 17 | Connie Hoffman                |   3 |   121.02
+ 18 | Morgan Haney                  |  17 |  4968.68
+ 19 | Anthony Johnson               |   7 |   358.27
+ 20 | George Bates                  |  13 |  2370.65
+ 21 | Joshua Wells                  |   8 |   436.28
+ 22 | John Yang                     |   5 |   191.43
+ 23 | Julie Rowe                    |   5 |  2682.65
+ 24 | George Deleon                 |  10 |   478.00
+ 25 | Megan Saunders                |  10 |  3276.13
+ 26 | Anna Long                     |  11 |   224.67
+ 27 | Mark Tate                     |  11 |  2934.50
+ 28 | Jeffrey Martinez              |   8 |  2634.51
+ 29 | Patricia Reeves               |  11 |  4433.26
+ 30 | Beth Massey                   |  13 |  4906.94
+ 31 | Mary Castro                   |  12 |   136.03
+ 32 | Crystal Larson                |   9 |  3651.63
+
+Sorted results (age >= 18):
+  # | Name                          | Age | Salary   | Hash
+----+-------------------------------+-----+----------+--------------
+  - | -                             |   - |    --.-- | -

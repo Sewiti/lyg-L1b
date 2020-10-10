@@ -1,0 +1,71 @@
+Initial data:
+  # | Name                          | Age | Salary
+----+-------------------------------+-----+----------
+  1 | Heather Campbell              |  18 |  1178.82
+  2 | Stacey Brown                  |  91 |  4736.19
+  3 | Michael Jackson               | 108 |  2012.86
+  4 | Karen Walsh                   | 110 |  3818.07
+  5 | Tamara Miller                 |  29 |  2919.01
+  6 | Nicholas Johnson              |  27 |  4487.29
+  7 | Cristina Pearson              |  93 |  2990.88
+  8 | Peter Valenzuela              |  52 |  2269.32
+  9 | Jessica Douglas               |  25 |  1980.22
+ 10 | Gregory Wells                 | 101 |  1403.49
+ 11 | Tiffany Ponce                 |  25 |  3079.72
+ 12 | Gwendolyn Lee                 |  87 |  2530.03
+ 13 | Matthew Hayes                 |  99 |  2741.09
+ 14 | Charles Young                 | 109 |  4778.25
+ 15 | Natalie Parker                | 110 |  2605.44
+ 16 | Daniel Mcdowell               |  68 |  4460.75
+ 17 | Jonathan Bennett              | 100 |  4104.45
+ 18 | Donald Bautista               |  92 |   167.15
+ 19 | Justin Morales                |  59 |  2516.82
+ 20 | Pamela Campbell               |  58 |  3329.59
+ 21 | Sherry Ferguson               |  91 |   684.73
+ 22 | Victoria Garcia               |  37 |  4767.01
+ 23 | Kevin Williams                |  31 |  3548.04
+ 24 | Kristine Young MD             |  30 |  1226.34
+ 25 | Jennifer Matthews             |  82 |  3368.92
+ 26 | Thomas Martin                 |  49 |  3072.44
+ 27 | Heather Watts                 |  87 |   479.49
+ 28 | David Bowman                  |  57 |  2038.83
+ 29 | Jose Perry                    |  92 |  1771.78
+ 30 | Bonnie Patton                 |  91 |  2535.59
+ 31 | Kevin Smith                   |  43 |  4243.94
+ 32 | Juan Hayes                    |  27 |  4984.03
+
+Sorted results (age >= 18):
+  # | Name                          | Age | Salary   | Hash
+----+-------------------------------+-----+----------+--------------
+  1 | Bonnie Patton                 |  91 |  2535.59 | 0IDwdRFabGA=
+  2 | Charles Young                 | 109 |  4778.25 | d/SkQeADWlA=
+  3 | Cristina Pearson              |  93 |  2990.88 | S7C0cFkB6tE=
+  4 | Daniel Mcdowell               |  68 |  4460.75 | yoc+V0ZAFTU=
+  5 | David Bowman                  |  57 |  2038.83 | zUKXYJmLSQQ=
+  6 | Donald Bautista               |  92 |   167.15 | Bz5coMqoBEA=
+  7 | Gregory Wells                 | 101 |  1403.49 | ZCOs/i/Y0ss=
+  8 | Gwendolyn Lee                 |  87 |  2530.03 | EPWtvs6iXg0=
+  9 | Heather Campbell              |  18 |  1178.82 | /k8J6Kny+QE=
+ 10 | Heather Watts                 |  87 |   479.49 | /k8J6Kny+QE=
+ 11 | Jennifer Matthews             |  82 |  3368.92 | girk5GZ2PLM=
+ 12 | Jessica Douglas               |  25 |  1980.22 | TyhyW8IyhnE=
+ 13 | Jonathan Bennett              | 100 |  4104.45 | QTqC6dHuU4A=
+ 14 | Jose Perry                    |  92 |  1771.78 | 1jx5M5daixg=
+ 15 | Juan Hayes                    |  27 |  4984.03 | c0/ZvQmfVZQ=
+ 16 | Justin Morales                |  59 |  2516.82 | E7kzd3oyswQ=
+ 17 | Karen Walsh                   | 110 |  3818.07 | 3M39xlWyMR8=
+ 18 | Kevin Smith                   |  43 |  4243.94 | bdwm8C8+9qs=
+ 19 | Kevin Williams                |  31 |  3548.04 | eIM9dfWcQEk=
+ 20 | Kristine Young MD             |  30 |  1226.34 | H45IreEiDy8=
+ 21 | Matthew Hayes                 |  99 |  2741.09 | rMIYrQan3bQ=
+ 22 | Michael Jackson               | 108 |  2012.86 | dwoFTJq3EJc=
+ 23 | Natalie Parker                | 110 |  2605.44 | 80ILVwvxYzk=
+ 24 | Nicholas Johnson              |  27 |  4487.29 | qLgd77T3PH8=
+ 25 | Pamela Campbell               |  58 |  3329.59 | PeEbNXL0WYQ=
+ 26 | Peter Valenzuela              |  52 |  2269.32 | lIrrRqV0goE=
+ 27 | Sherry Ferguson               |  91 |   684.73 | ma95mjCDD2Q=
+ 28 | Stacey Brown                  |  91 |  4736.19 | wUyoOy5uIz8=
+ 29 | Tamara Miller                 |  29 |  2919.01 | P3y83Oa3E7s=
+ 30 | Thomas Martin                 |  49 |  3072.44 | gu/j79pKZLY=
+ 31 | Tiffany Ponce                 |  25 |  3079.72 | yVlZYg/Hv6o=
+ 32 | Victoria Garcia               |  37 |  4767.01 | /qEdGh9X5JA=

@@ -1,0 +1,59 @@
+Initial data:
+  # | Name                          | Age | Salary
+----+-------------------------------+-----+----------
+  1 | Nathan Simmons                |  63 |  3110.71
+  2 | Michelle Adams                |   7 |  2836.69
+  3 | Traci Horn                    |  92 |  2801.78
+  4 | Robert Wilkinson              |  33 |  3471.43
+  5 | Walter Hudson                 |  73 |  1613.86
+  6 | Devon Petersen                |  74 |  4399.68
+  7 | Jamie Reynolds                |  52 |  4977.95
+  8 | Katherine Lewis               |  13 |  2496.64
+  9 | Cheryl Jones                  |  40 |  2207.86
+ 10 | Hannah Nichols                |   6 |  4160.47
+ 11 | Chase Parker                  |  19 |  1121.36
+ 12 | James Hicks                   | 110 |  2447.09
+ 13 | Crystal Cook                  |   9 |  2968.95
+ 14 | Daniel Smith                  |   3 |  3933.67
+ 15 | Jacqueline Johnston           |  23 |   708.72
+ 16 | Colleen Jackson               |   4 |  1513.86
+ 17 | Shannon Weber                 |  59 |  3297.67
+ 18 | Anthony Holder                |   6 |  4822.48
+ 19 | Lawrence Rodriguez            |  10 |  4383.17
+ 20 | Donna Williams                |   9 |  4688.64
+ 21 | Lauren Clark                  |  18 |   796.03
+ 22 | Eric Fox                      |  18 |  4863.92
+ 23 | Alan Rodriguez                |   3 |  2122.99
+ 24 | Michael Hubbard               |  10 |  1968.72
+ 25 | Jack White                    |  83 |  1992.78
+ 26 | Raymond Turner                |   9 |  4221.01
+ 27 | Matthew Thomas                |  99 |  4212.37
+ 28 | Brian Price                   |  21 |  4147.79
+ 29 | Edward Leonard                |  44 |  1539.17
+ 30 | Leslie Johnson                |  74 |  3283.28
+ 31 | Courtney Hughes               |  29 |  1623.93
+ 32 | Meghan Jones                  |  50 |  1914.56
+
+Sorted results (age >= 18):
+  # | Name                          | Age | Salary   | Hash
+----+-------------------------------+-----+----------+--------------
+  1 | Brian Price                   |  21 |  4147.79 | ueha3kJb6KM=
+  2 | Chase Parker                  |  19 |  1121.36 | iMv7/259Fvg=
+  3 | Cheryl Jones                  |  40 |  2207.86 | TI2mjBTHUtI=
+  4 | Courtney Hughes               |  29 |  1623.93 | 01Ptmgj70yM=
+  5 | Devon Petersen                |  74 |  4399.68 | h5SkMrLpD84=
+  6 | Edward Leonard                |  44 |  1539.17 | QZmUn5kwHE0=
+  7 | Eric Fox                      |  18 |  4863.92 | P3V4JDQ3JL0=
+  8 | Jack White                    |  83 |  1992.78 | nRYha1sccJU=
+  9 | Jacqueline Johnston           |  23 |   708.72 | eM89rsZLBH4=
+ 10 | James Hicks                   | 110 |  2447.09 | x8CFjBsVF9o=
+ 11 | Jamie Reynolds                |  52 |  4977.95 | 8btm1c4FlMk=
+ 12 | Lauren Clark                  |  18 |   796.03 | q+VrnERYzF4=
+ 13 | Leslie Johnson                |  74 |  3283.28 | 3q5WwXbbmqs=
+ 14 | Matthew Thomas                |  99 |  4212.37 | rMIYrQan3bQ=
+ 15 | Meghan Jones                  |  50 |  1914.56 | y85bwg+ZaBM=
+ 16 | Nathan Simmons                |  63 |  3110.71 | f5WDGaGvkSY=
+ 17 | Robert Wilkinson              |  33 |  3471.43 | B3p2Mn0ZUMQ=
+ 18 | Shannon Weber                 |  59 |  3297.67 | mpbqHacfdZw=
+ 19 | Traci Horn                    |  92 |  2801.78 | Y4KhTrC9zW0=
+ 20 | Walter Hudson                 |  73 |  1613.86 | mT2GJobJw4k=

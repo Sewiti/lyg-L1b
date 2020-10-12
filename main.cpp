@@ -1,4 +1,6 @@
 #include "Data.h"
+#include "DataBuffer.h"
+#include "ResultsBuffer.h"
 #include "json.hpp"
 #include <cstring>
 #include <fstream>

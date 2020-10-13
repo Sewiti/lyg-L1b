@@ -56,7 +56,7 @@ void executeFile(const string &dataFilename, const string &resultsFilename) {
 
     unsigned int n = items.size() / 4;
 
-#pragma omp parallel num_threads(n+1) default(none) shared(dataBuffer, resultsBuffer, items, n)
+#pragma omp parallel num_threads(n+1) default(none) firstprivate(n, items) shared(dataBuffer, resultsBuffer)
     {
         if (omp_get_thread_num() == n) {
             // "Main" thread
